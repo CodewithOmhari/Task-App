@@ -6,18 +6,18 @@ const taskCount = document.querySelector("#task-count")
 const completeCount = document.querySelector("#complete-count")
 const cancelBtn = document.querySelector("#cancel-btn")
 
-//'Go to gym', "Revision Web dev", "Take class"
+
 
 let todos = JSON.parse(localStorage.getItem("todos")) || [];
 console.log(todos);
 
-let editTodoId = null  // flag
+let editTodoId = null  
 todoForm.addEventListener('submit', (e) => {
     e.preventDefault()
 
     const todoValue = todoInput.value.trim();
 
-    // aagr todo is value empty hai means "" then we do !"" -> true and ! is logical not operator
+    
     if (!todoValue) {
         return
     }
@@ -25,7 +25,7 @@ todoForm.addEventListener('submit', (e) => {
     console.log({ editTodoId, todoValue });
 
     if (editTodoId) {
-        // editing 
+        
         todos = todos.map((todo) => {
             if (todo.id === Number(editTodoId)) {
                 return {
@@ -47,18 +47,12 @@ todoForm.addEventListener('submit', (e) => {
             isCompleted: false
         }
 
-        todos.push(newTodo) // adding new todo to exisiting todos list
+        todos.push(newTodo) 
         localStorage.setItem("todos",JSON.stringify(todos))
-
-        // todos.push({
-        //     id: Date.now(),
-        //     text: todoValue,
-        //     isCompleted: false
-        // })
     }
 
     cancelEdit();
-    renderTodo() // jab koi naya todo add hoga firse updated todos render ho jayenge
+    renderTodo() 
 })
 
 
@@ -66,7 +60,7 @@ todoForm.addEventListener('submit', (e) => {
 function renderTodo() {
     todoList.innerHTML = ""
     //  or 
-    // todoList.textContent = ""
+    // todoList.textContent = "
     todos.forEach((todo) => {
         const li = document.createElement("li");
 
@@ -76,7 +70,7 @@ function renderTodo() {
 
         // li.setAttribute("data-id", todo.id) // this is jugad
         // or
-        li.dataset.id = todo.id // this is original method
+        li.dataset.id = todo.id 
 
         li.innerHTML = `
                     <input data-action="toogle" ${todo.isCompleted ? "checked" : ""} type="checkbox">
@@ -87,24 +81,21 @@ function renderTodo() {
                     </div>`
 
 
-        todoList.append(li) // here we want exact/valid html code
+        todoList.append(li) 
     })
 
     taskCount.textContent = `TASKS (${todos.length})`
     completeCount.textContent = `COMPLETED: ${todos.filter((todo) => todo.isCompleted).length}`
 }
 
-renderTodo() // jab first time file execute hogi tab existing todos render ho jayenge
+renderTodo() 
 
 
-// event delegation
+
 todoList.addEventListener('click', (e) => {
     e.stopPropagation()
 
-    // console.log(e.target); // e.target -> jis element per click krte ho
-    // console.log(e.currentTarget); // e.currentTarget -> jis element per event listener attached hai
-
-    // console.log(e.target.parentElement);
+  
 
     const li = e.target.closest('li')
     const id = li.dataset.id;
